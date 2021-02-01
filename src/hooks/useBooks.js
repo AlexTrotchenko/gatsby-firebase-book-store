@@ -13,7 +13,7 @@ const useBooks = ()=>{
             }
             localImage {
               childImageSharp {
-                fixed(width:200){
+                fixed(width:300){
                   ...GatsbyImageSharpFixed
                 }
               }

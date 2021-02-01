@@ -21,6 +21,10 @@ import Img from 'gatsby-image';
             font-weight:normal
         }
     }
+    @media screen and (max-width:800px) {
+        flex-direction:column;
+        align-items:center
+    }
  `
 
  const BookItem = ({title,author,summary,children,imgSharp}) =>{

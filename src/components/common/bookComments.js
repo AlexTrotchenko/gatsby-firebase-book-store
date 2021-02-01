@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 import styled from 'styled-components';
 import {Input,Button} from './index';
 import moment from 'moment';
+import {ErrorMessage} from './errorMessage'
 
 const StyledForm = styled.form`
     display:flex;
@@ -27,6 +28,7 @@ export const BoookComments = ({firebase,bookId})=>{
 
     const [comments,setComments] = useState([])
     const [postText,setPostText] = useState('')
+    const [errors,setErrors] = useState('')
 
     const handleSubmit = e =>{
         e.preventDefault()
@@ -34,6 +36,12 @@ export const BoookComments = ({firebase,bookId})=>{
             text:postText,
             bookId
         })
+        .catch(err=>{
+            const {message} = err
+            setErrors(message)
+        }
+            
+        )
         setPostText('')
     }
 
@@ -65,12 +73,18 @@ export const BoookComments = ({firebase,bookId})=>{
             <StyledForm onSubmit = {handleSubmit}>
                 <Input value = {postText} onChange = {e=>{
                     e.persist()
+                    setErrors('')
                     setPostText(e.target.value)
                 }}/>
                 <Button type='submit'>
                     Post comment
                 </Button>
             </StyledForm>
+            {
+                errors
+                ?<ErrorMessage>{errors}</ErrorMessage>
+                :null
+            }
             {
                 comments.map(comment =>(
                         <CommentListItem key = {comment.id}>
