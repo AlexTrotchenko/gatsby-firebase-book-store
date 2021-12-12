@@ -1,5 +1,7 @@
 require('dotenv').config({
-  path:'.env'
+  path:'src/pages/.env'
+  
+  // path:'.env'
 })
 
 module.exports = {

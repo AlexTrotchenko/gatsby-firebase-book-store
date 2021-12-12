@@ -1,6 +1,7 @@
 import React,{useState,useContext} from 'react';
 import {Form,Input,Button,ErrorMessage} from '../components/common';
 import FirebaseContext from '../firebase/context';
+import { navigate } from "gatsby";
 
 
 const Register = () =>{
@@ -24,7 +25,7 @@ const Register = () =>{
                 userName:credentials.userName,
                 email:credentials.email,
                 password:credentials.password
-            }).catch(error=>setErrorMassages(error.message))
+            }).then(()=>navigate(-1)).catch(error=>setErrorMassages(error.message))
         }else{
             setErrorMassages('Passwords should match')
         }

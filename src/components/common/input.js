@@ -11,7 +11,7 @@ export const Input = styled.input`
     box-shadow:none;
    
     &:active, &:focus{
-        border:1px solid rebeccapurple;
+        border:1px solid #276678;
         outline:none;
     }
 `

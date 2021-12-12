@@ -9,6 +9,7 @@
     "babel-plugin-styled-components": "^1.12.0",
     "firebase": "^7.24.0",
     "gatsby": "^2.26.1",
+    "gatsby-background-image": "^1.4.1",
     "gatsby-firesource": "^2.0.3",
     "gatsby-image": "^2.5.0",
     "gatsby-plugin-manifest": "^2.6.1",

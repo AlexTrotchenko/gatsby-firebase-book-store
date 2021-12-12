@@ -5,7 +5,7 @@ import FirebaseContext from '../firebase/context'
 import styled from 'styled-components';
 
 const HeaderWrapper = styled.header`
-  background: rebeccapurple;
+  background: #1687a7;
   margin-bottom: 1.45rem;
 `
 const Divider =styled.span`
@@ -56,7 +56,6 @@ const AdminLink = styled.span`
 
 const Header = ({ siteTitle }) => {
   const{user,loading,firebase} = useContext(FirebaseContext)
-  console.log(user)
   const handleLogOut = () =>firebase.logout()
   return(
   <HeaderWrapper>

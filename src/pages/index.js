@@ -1,8 +1,10 @@
-import React from "react"
+import React,{useContext} from "react"
 import { Link } from "gatsby"
 import useBooks from '../hooks/useBooks'
 import BookItem from "../components/bookItem"
 import styled from 'styled-components'
+import FirebaseContext from '../firebase/context'
+
 
 const LinkButton = styled.div`
   text-align:right;
@@ -10,17 +12,19 @@ const LinkButton = styled.div`
   a{
     text-decoration:none;
     padding:8px;
-    background:rebeccapurple;
+    background:#1687a7;
     color:white;
     border-radius:8px;
     &:hover{
-      background:indigo;
+      background:#276678;
     }
   }
 `
 
 const IndexPage = () => {
   const books = useBooks()
+  const {firebase} = useContext(FirebaseContext)
+
   return(
   <>
     {
@@ -30,7 +34,10 @@ const IndexPage = () => {
         author= {book.author}
         summary= {book.summary}
         imgSharp = {book.imgSharp}
-        key={book.id}>
+        key={book.id}
+        bookId={book.id}
+        >
+        
           <LinkButton>
               <Link to={`/book/${book.id}`}>Join conversation</Link>
           </LinkButton>

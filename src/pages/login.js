@@ -1,6 +1,7 @@
 import React,{useState,useContext} from "react"
 import FirebaseContext from '../firebase/context'
 import {Form,Input,Button,ErrorMessage} from '../components/common'
+import { navigate } from "gatsby"
 
 
 
@@ -12,7 +13,8 @@ const Login = () => {
 
     const handleSubmit = e =>{
         e.preventDefault()
-        firebase.login(credentials).catch(error=>
+
+        firebase.login(credentials).then(()=>navigate(-1)).catch(error=>
             setErrorMassages(error.message)
             )
 

@@ -1,5 +1,4 @@
 import firebaseConfig from "./config";
-import axios from 'axios';
 
 class Firebase {
   constructor(app) {
@@ -11,6 +10,11 @@ class Firebase {
       this.functions = app.functions();
       this.storage = app.storage();
     }
+  }
+
+  async assignRating({rating,bookId}){
+    const callableAssignRating = await this.functions.httpsCallable('assignRating')
+    return await callableAssignRating({rating,bookId})
   }
 
   async postComment({text,bookId}){
@@ -33,6 +37,12 @@ class Firebase {
     return this.db.collection('authors').get()
   }
 
+  getUserRating(userId){
+    return this.db.collection('publicProfiles')
+    .where('userId','==',userId)
+    .limit(1).get()
+  }
+
   getUserProfile ({userId,onSnapshot}){
     this.db.collection('publicProfiles')
            .where('userId','==',userId)
@@ -46,9 +56,18 @@ class Firebase {
   subscribeToBookComments ({bookId,onSnapshot}){
     const bookRef = this.db.collection('books').doc(bookId)
     return this.db.collection('comments')
-                  .where('bookRef','==',bookRef)
-                  .orderBy('dateCreated','desc')
-                  .onSnapshot(onSnapshot)
+    .where('bookRef','==',bookRef)
+    .orderBy('dateCreated','desc')
+    .onSnapshot(onSnapshot)
+  }
+  
+  subscribeToBookRating({bookId,onSnapshot}){
+  this.db.collection('ratings').doc(bookId).onSnapshot(onSnapshot)
+
+}
+
+  getRatings(bookId){
+    return this.db.collection('ratings').doc(bookId).get()
   }
 
   async login({email, password}) {

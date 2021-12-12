@@ -10,9 +10,18 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import FirebaseContext from '../firebase/context'
 import useAuth from '../firebase/useAuth'
+import styled from 'styled-components'
+import BackgroundImage from 'gatsby-background-image';
+
 
 import Header from "./header"
 import "./layout.css"
+
+const ImageBackground = styled(BackgroundImage)`
+    background-size: 125px;
+    background-repeat:repeat;
+    min-height:100vh;
+    `
 
 const Layout = ({ children }) => {
   const {user,firebase,loading}=useAuth()
@@ -23,10 +32,29 @@ const Layout = ({ children }) => {
           title
         }
       }
+      image: file(relativePath:{eq:"pattern.png"}){
+        sharp: childImageSharp {
+            fluid {
+                ...GatsbyImageSharpFluid_withWebp 
+            }
+        }
+    }
     }
   `)
+//   const{image} = useStaticQuery(graphql`
+//   query{
+//       image: file(relativePath:{eq:"pattern.png"}){
+//           sharp: childImageSharp {
+//               fluid {
+//                   ...GatsbyImageSharpFluid_withWebp 
+//               }
+//           }
+//       }
+//   }
+// `)
 
   return (
+      <ImageBackground fluid={data.image.sharp.fluid} fadeIn="soft">
     <FirebaseContext.Provider value={{user,firebase,loading}}>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
       <div
@@ -40,6 +68,7 @@ const Layout = ({ children }) => {
 
       </div>
     </FirebaseContext.Provider>
+      </ImageBackground>
   )
 }
 
